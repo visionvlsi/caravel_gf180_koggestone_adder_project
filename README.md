@@ -7,6 +7,4 @@
 
 ## Please fill in your project documentation in this README.md file 
 
-Refer to [README](docs/source/index.rst#section-quickstart) for a quickstart of how to use caravel_user_project
-
-Refer to [README](docs/source/index.rst) for this sample project documentation. 
+16-bit koggestone adder verilog implementation using openlane and gf180 nm PDK.
