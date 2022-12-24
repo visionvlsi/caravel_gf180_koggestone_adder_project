@@ -1,12 +1,5 @@
 `default_nettype none
 
-module Triangle(output Si, input Pi, CiPrev);
-  
-  xor  (Si, Pi, CiPrev);
-  
-endmodule
-
-
 module KSA16(output [15:0] sum, output cout, input [15:0] a, b);
   
   //Definition of the Power Pins
