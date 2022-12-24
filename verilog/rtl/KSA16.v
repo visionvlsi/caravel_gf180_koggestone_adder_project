@@ -1,13 +1,5 @@
 `default_nettype none
 
-
-module SmallCircle(output Ci, input Gi);
-  
- // buf  (Ci, Gi);
-    assign Ci=Gi;
-  
-endmodule
-
 module Square(output G, P, input Ai, Bi);
   
   and  (G, Ai, Bi);
