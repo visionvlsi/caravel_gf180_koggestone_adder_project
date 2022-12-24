@@ -33,7 +33,7 @@ module KSA16(output [15:0] sum, output cout, input [15:0] a, b);
   // second line of circle
   wire [15:3] g3, p3;
     genvar k;
-    generate for(k=1; k<3; k=k+1) begin : test2
+	generate for(k=1; k<3; k=k+1) begin : test2a
   //SmallCircle sc1[2:1](c[2:1], g2[2:1]);
         SmallCircle sc1(c[k], g2[k]);
     end
