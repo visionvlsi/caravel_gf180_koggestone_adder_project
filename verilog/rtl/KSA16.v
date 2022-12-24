@@ -1,12 +1,5 @@
 `default_nettype none
 
-module Square(output G, P, input Ai, Bi);
-  
-  and  (G, Ai, Bi);
-  xor  (P, Ai, Bi);
-  
-endmodule
-
 module Triangle(output Si, input Pi, CiPrev);
   
   xor  (Si, Pi, CiPrev);
