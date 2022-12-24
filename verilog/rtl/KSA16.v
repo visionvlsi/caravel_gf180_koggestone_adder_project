@@ -31,6 +31,13 @@ endmodule
 
 module KSA16(output [15:0] sum, output cout, input [15:0] a, b);
   
+  //Definition of the Power Pins
+
+`ifdef USE_POWER_PINS
+	inout vdd, //User area 1 1.8V Supply
+	inout vss, //User area 1 digital ground
+`endif
+  
   wire cin = 1'b0;
   wire [15:0] c;
   wire [15:0] g, p;
