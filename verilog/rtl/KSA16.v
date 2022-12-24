@@ -1,5 +1,3 @@
-`default_nettype none
-
 module KSA16(output [15:0] sum, output cout, input [15:0] a, b);
   
   //Definition of the Power Pins
@@ -92,4 +90,3 @@ module KSA16(output [15:0] sum, output cout, input [15:0] a, b);
  // buf (cout, c[15]);
     assign cout=c[15];
 endmodule
-`default_nettype wire
