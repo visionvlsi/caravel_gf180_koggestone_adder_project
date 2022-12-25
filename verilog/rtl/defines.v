@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 Efabless Corporation
+// SPDX-FileCopyrightText: 2020 Efabless Corporation
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,78 +15,52 @@
 
 `default_nettype none
 
-`ifndef __USER_DEFINES_H
-// User GPIO initial configuration parameters
-`define __USER_DEFINES_H
+`ifndef __GLOBAL_DEFINE_H
+// Global parameters
+`define __GLOBAL_DEFINE_H
 
-// deliberately erroneous placeholder value; user required to config GPIO's to other
-`define GPIO_MODE_INVALID                  13'hXXXX
+`define MPRJ_IO_PADS_1 19	/* number of user GPIO pads on user1 side */
+`define MPRJ_IO_PADS_2 19	/* number of user GPIO pads on user2 side */
+`define MPRJ_IO_PADS (`MPRJ_IO_PADS_1 + `MPRJ_IO_PADS_2)
 
-// Authoritive source of these MODE defs is: caravel/verilog/rtl/user_defines.v
-// Useful GPIO mode values.  These match the names used in defs.h.
-//
-`define GPIO_MODE_MGMT_STD_INPUT_NOPULL    13'h0403
-`define GPIO_MODE_MGMT_STD_INPUT_PULLDOWN  13'h0c01
-`define GPIO_MODE_MGMT_STD_INPUT_PULLUP    13'h0801
-`define GPIO_MODE_MGMT_STD_OUTPUT          13'h1809
-`define GPIO_MODE_MGMT_STD_BIDIRECTIONAL   13'h1801
-`define GPIO_MODE_MGMT_STD_ANALOG          13'h000b
+`define MPRJ_PWR_PADS_1 2	/* vdda1, vccd1 enable/disable control */
+`define MPRJ_PWR_PADS_2 2	/* vdda2, vccd2 enable/disable control */
+`define MPRJ_PWR_PADS (`MPRJ_PWR_PADS_1 + `MPRJ_PWR_PADS_2)
 
-`define GPIO_MODE_USER_STD_INPUT_NOPULL    13'h0402
-`define GPIO_MODE_USER_STD_INPUT_PULLDOWN  13'h0c00
-`define GPIO_MODE_USER_STD_INPUT_PULLUP    13'h0800
-`define GPIO_MODE_USER_STD_OUTPUT          13'h1808
-`define GPIO_MODE_USER_STD_BIDIRECTIONAL   13'h1800
-`define GPIO_MODE_USER_STD_OUT_MONITORED   13'h1802
-`define GPIO_MODE_USER_STD_ANALOG          13'h000a
+// Analog pads are only used by the "caravan" module and associated
+// modules such as user_analog_project_wrapper and chip_io_alt.
 
-// The power-on configuration for GPIO 0 to 4 is fixed and cannot be
-// modified (allowing the SPI and debug to always be accessible unless
-// overridden by a flash program).
+`define ANALOG_PADS_1 5
+`define ANALOG_PADS_2 6
 
-// The values below can be any of the standard types defined above,
-// or they can be any 13-bit value if the user wants a non-standard
-// startup state for the GPIO.  By default, every GPIO from 5 to 37
-// is set to power up as an input controlled by the management SoC.
-// Users may want to redefine these so that the user project powers
-// up in a state that can be used immediately without depending on
-// the management SoC to run a startup program to configure the GPIOs.
+`define ANALOG_PADS (`ANALOG_PADS_1 + `ANALOG_PADS_2)
 
-`define USER_CONFIG_GPIO_5_INIT  `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_6_INIT  `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_7_INIT  `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_8_INIT  `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_9_INIT  `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_10_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_11_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_12_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_13_INIT `GPIO_MODE_INVALID
+// Size of soc_mem_synth
 
-// Configurations of GPIO 14 to 24 are used on caravel but not caravan.
-`define USER_CONFIG_GPIO_14_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_15_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_16_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_17_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_18_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_19_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_20_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_21_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_22_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_23_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_24_INIT `GPIO_MODE_INVALID
+// Type and size of soc_mem
+// `define USE_OPENRAM
+`define USE_CUSTOM_DFFRAM
+// don't change the following without double checking addr widths
+`define MEM_WORDS 256
 
-`define USER_CONFIG_GPIO_25_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_26_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_27_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_28_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_29_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_30_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_31_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_32_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_33_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_34_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_35_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_36_INIT `GPIO_MODE_INVALID
-`define USER_CONFIG_GPIO_37_INIT `GPIO_MODE_INVALID
+// Number of columns in the custom memory; takes one of three values:
+// 1 column : 1 KB, 2 column: 2 KB, 4 column: 4KB
+`define DFFRAM_WSIZE 4
+`define DFFRAM_USE_LATCH 0
 
-`endif // __USER_DEFINES_H
+// not really parameterized but just to easily keep track of the number
+// of ram_block across different modules
+`define RAM_BLOCKS 1
+
+// Clock divisor default value
+`define CLK_DIV 3'b010
+
+// GPIO control default mode and enable for most I/Os
+// Most I/Os set to be user input pins on startup.
+// NOTE:  To be modified, with GPIOs 5 to 35 being set from a build-time-
+// programmable block.
+`define MGMT_INIT 1'b0
+`define OENB_INIT 1'b0
+`define DM_INIT 3'b001
+
+`endif // __GLOBAL_DEFINE_H
